@@ -1,0 +1,6 @@
+.env
+*.db
+./finance-tracker-frontend/*
+./finance-tracker-backend/*
+./postgres-data/*
+.DS_Store

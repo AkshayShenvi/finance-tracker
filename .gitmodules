@@ -1,0 +1,6 @@
+[submodule "finance-tracker-frontend"]
+	path = finance-tracker-frontend
+	url = https://github.com/AkshayShenvi/finance-tracker-frontend.git
+[submodule "finance-tracker-backend"]
+	path = finance-tracker-backend
+	url = https://github.com/AkshayShenvi/finance-tracker-backend.git
