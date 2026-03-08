@@ -41,25 +41,17 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./finance-tracker-backend:/app
     networks:
       - finance-network
-    entrypoint: ["/bin/bash", "/app/scripts/entrypoint.sh"]
 
   # React Frontend
   frontend:
     image: ghcr.io/akshayshenvi/finance-tracker-frontend:latest
     container_name: finance-tracker-frontend
-    environment:
-      - VITE_API_URL=http://localhost:8000
     ports:
       - "3000:3000"
     depends_on:
       - backend
-    volumes:
-      - ./finance-tracker-frontend:/app
-      - /app/node_modules
     networks:
       - finance-network
 
