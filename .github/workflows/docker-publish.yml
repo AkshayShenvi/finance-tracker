@@ -63,8 +63,6 @@ jobs:
         with:
           context: ./finance-tracker-frontend
           push: true
-          build-args: |
-            VITE_API_URL=http://localhost:8000
           tags: |
             ${{ env.FRONTEND_IMAGE }}:latest
             ${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
