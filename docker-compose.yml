@@ -24,6 +24,7 @@ services:
   # FastAPI Backend
   backend:
     image: ghcr.io/akshayshenvi/finance-tracker-backend:latest
+    pull_policy: always
     container_name: finance-tracker-backend
     environment:
       DATABASE_URL: postgresql://financeuser:financepass@db:5432/financedb
@@ -47,6 +48,7 @@ services:
   # React Frontend
   frontend:
     image: ghcr.io/akshayshenvi/finance-tracker-frontend:latest
+    pull_policy: always
     container_name: finance-tracker-frontend
     ports:
       - "3000:3000"
