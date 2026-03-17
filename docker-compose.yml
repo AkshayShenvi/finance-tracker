@@ -23,7 +23,7 @@ services:
 
   # FastAPI Backend
   backend:
-    image: ghcr.io/akshayshenvi/finance-tracker-backend:latest
+    image: ghcr.io/one-two-many/finance-tracker-backend:latest
     pull_policy: always
     container_name: finance-tracker-backend
     environment:
@@ -47,7 +47,7 @@ services:
 
   # React Frontend
   frontend:
-    image: ghcr.io/akshayshenvi/finance-tracker-frontend:latest
+    image: ghcr.io/one-two-many/finance-tracker-frontend:latest
     pull_policy: always
     container_name: finance-tracker-frontend
     ports:
