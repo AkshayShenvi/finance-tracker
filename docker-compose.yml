@@ -37,6 +37,11 @@ services:
       DB_USER: financeuser
       DB_NAME: financedb
       POSTGRES_PASSWORD: financepass
+      # OpenTelemetry
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-https://otel-http-sauron.anton-20.com}
+      OTEL_SERVICE_NAME: finance-tracker-backend
+      OTEL_RESOURCE_ATTRIBUTES: "deployment.environment=production,service.version=1.0.0"
+      LOG_LEVEL: "INFO"
     ports:
       - "8000:8000"
     depends_on:
@@ -50,6 +55,8 @@ services:
     image: ghcr.io/one-two-many/finance-tracker-frontend:latest
     pull_policy: always
     container_name: finance-tracker-frontend
+    environment:
+      VITE_OTEL_ENDPOINT: ${VITE_OTEL_ENDPOINT:-https://otel-http-sauron.anton-20.com}
     ports:
       - "3000:3000"
     depends_on:
