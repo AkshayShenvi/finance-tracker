@@ -6,15 +6,15 @@ services:
     image: postgres:15-alpine
     container_name: finance-tracker-db
     environment:
-      POSTGRES_USER: financeuser
-      POSTGRES_PASSWORD: financepass
-      POSTGRES_DB: financedb
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER must be set in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB must be set in .env}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U financeuser"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,18 +27,18 @@ services:
     pull_policy: always
     container_name: finance-tracker-backend
     environment:
-      FT_DATABASE_URL: postgresql://financeuser:financepass@db:5432/financedb
-      SECRET_KEY: ${SECRET_KEY:-change-this-in-production}
+      FT_DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY must be set in .env - see .env.example}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:5173}
       DEBUG: "True"
       # Database connection for migrations
       DB_HOST: db
       DB_PORT: 5432
-      DB_USER: financeuser
-      DB_NAME: financedb
-      POSTGRES_PASSWORD: financepass
-      # OpenTelemetry
-      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-https://otel-http-sauron.anton-20.com}
+      DB_USER: ${POSTGRES_USER}
+      DB_NAME: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      # OpenTelemetry (optional — leave OTEL_EXPORTER_OTLP_ENDPOINT empty to disable)
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
       OTEL_SERVICE_NAME: finance-tracker-backend
       OTEL_RESOURCE_ATTRIBUTES: "deployment.environment=production,service.version=1.0.0"
       LOG_LEVEL: "INFO"
@@ -56,7 +56,7 @@ services:
     pull_policy: always
     container_name: finance-tracker-frontend
     environment:
-      VITE_OTEL_ENDPOINT: ${VITE_OTEL_ENDPOINT:-https://otel-http-sauron.anton-20.com}
+      VITE_OTEL_ENDPOINT: ${VITE_OTEL_ENDPOINT:-}
     ports:
       - "3000:3000"
     depends_on:

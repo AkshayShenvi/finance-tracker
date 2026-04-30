@@ -1,6 +1,36 @@
+# Environment
 .env
+.env.local
+.env.production
+
+# Databases
 *.db
-./finance-tracker-frontend/*
-./finance-tracker-backend/*
-./postgres-data/*
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Postgres data volume
+postgres_data/
+postgres-data/
+
+# Personal financial data (never commit)
+*.csv
+*.CSV
+temp_data/
+statements/
+
+# Local Claude config
+.claude/
+
+# Local notes
+AUTH.md
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
